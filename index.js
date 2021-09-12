@@ -163,6 +163,12 @@ const writeMetaData = (_data) => {
   fs.writeFileSync("./output/_metadata.json", _data);
 };
 
+const saveMetaDataSingleFile = (_json,_editionCount) => {
+  fs.writeFileSync(
+    `./output/${_editionCount}.json`, _json
+  );
+};
+
 // holds which dna has already been used during generation
 let dnaListByRarity = {};
 // holds metadata for all NFTs
@@ -221,7 +227,7 @@ const startCreating = async () => {
       // create empty image
       ctx.clearRect(0, 0, width, height);
       // draw a random background color
-      drawBackground();
+      //drawBackground();
       // store information about each layer to add it as meta information
       let attributesList = [];
       // draw each layer
@@ -237,6 +243,7 @@ const startCreating = async () => {
       metadataList.push(nftMetadata)
       console.log('- metadata: ' + JSON.stringify(nftMetadata));
       console.log('- edition ' + editionCount + ' created.');
+      saveMetaDataSingleFile(JSON.stringify(nftMetadata),editionCount);
       console.log();
     });
     dnaListByRarity[rarity].push(newDna);
